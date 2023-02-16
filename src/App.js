@@ -1,7 +1,7 @@
 import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // pages
-import { Home, Category, Cart } from "./pages/index";
+import { Category, Cart } from "./pages/index";
 // components
 import Navbar from './components/Navbar/Navbar';
 import Footer from "./components/Footer/Footer";
