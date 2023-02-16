@@ -8,7 +8,7 @@ const QRScanner = () => {
     const [username, setUserName] = useState();
     const [userid, setUserId] = useState();
     const [paystate, setPaystate] = useState(null);
-    const [facing, setFacing] = useState('rear');
+    // const [facing, setFacing] = useState('rear');
 
     const handleScan = (data) => {
         if (data) {
@@ -33,13 +33,13 @@ const QRScanner = () => {
         }
     })
 
-    const switchcamera = () => {
-        if (facing !== 'rear') {
-            setFacing('rear')
-        } else {
-            setFacing('front')
-        }
-    }
+    // const switchcamera = () => {
+    //     if (facing !== 'rear') {
+    //         setFacing('rear')
+    //     } else {
+    //         setFacing('front')
+    //     }
+    // }
 
 
     const handleError = (err) => {
@@ -51,15 +51,15 @@ const QRScanner = () => {
         <>
             <div className="qr-reader">
                 <h3>會員掃描</h3>
-                <button className='btn-danger' onClick={switchcamera}>Switch Camera</button>
+                {/* <button className='btn-danger' onClick={switchcamera}>Switch Camera</button> */}
                 <QrReader
 
-                    delay={500}
+                    scanDelay={1000}
                     style={{
                         height: 256,
                         width: 256,
                     }}
-                    facingmode={"user"}
+                    constraints={'front'}
                     onError={handleError}
                     onScan={handleScan}
                 />
