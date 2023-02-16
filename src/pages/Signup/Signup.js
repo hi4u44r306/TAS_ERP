@@ -69,6 +69,7 @@ class Signup extends React.Component {
             try {
                 firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
                     this.success();
+                    // 在User中用UserID建立集合
                     firebase.database().ref('Users/' + user.user.uid).set({
                         parentsname: this.state.parentsname,
                         studentname: this.state.studentname,
@@ -76,19 +77,13 @@ class Signup extends React.Component {
                         password: this.state.password,
                         phonenumber: this.state.phonenumber,
                         accountcreated: currentDate,
-                        payrecord: {
-                            currentMonth: {
-                                month: currentMonth,
-                                paystate: ""
-                            }
-                        }
+                    }).then(() => {
+                        // 在UserID集合中創建Payrecord子集合
+                        firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + currentMonth).set({
+                            month: currentMonth,
+                            paystate: ""
+                        })
                     });
-                    // firebase.database().ref('Users/' + user.user.uid + 'PayRecord' + currentMonth).set({
-                    //     payrecord: {
-                    //         month: currentMonth,
-                    //         paystate: ""
-                    //     }
-                    // })
                     setTimeout(() => { window.location.href = "/login"; }, 3000)
                 }).catch(() => {
                     this.error();
