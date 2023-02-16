@@ -1,0 +1,89 @@
+.Usercontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Userform {
+  height: fit-content;
+  min-width: 50vw;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding: 20px;
+  margin: 20px;
+}
+.sectiontitle {
+  display: flex;
+  align-items: center;
+  color: #103755;
+  font-size: 15px;
+  font-weight: 600;
+  gap: 5px;
+}
+.topusername {
+  display: flex;
+  color: #103755;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 20px;
+  gap: 5px;
+}
+.infocontainer {
+  display: flex;
+  color: #103755;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 20px;
+}
+.infolabel {
+  width: 80px;
+  vertical-align: middle;
+  display: inline-flex;
+  text-align: left;
+}
+.infospan {
+  width: calc(100% - 100px);
+}
+.Userinputcontainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin: 30px 10px 20px 10px;
+}
+.Userinputcontainer > label {
+  font-size: 18px;
+  font-weight: 700;
+}
+.Userinputcontainer > input {
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 5px 10px 5px 10px;
+}
+.Userlogoutbtn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
+}
+.Userinfobtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 20px;
+}
+.Userforgotpassword {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+@media (max-width: 425px) {
+  .Userform {
+    height: fit-content;
+    width: 90vw;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding: 10px;
+    margin: 20px;
+  }
+}
