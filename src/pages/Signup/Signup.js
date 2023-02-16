@@ -84,7 +84,7 @@ class Signup extends React.Component {
                             paystate: ""
                         })
                     });
-                    setTimeout(() => { window.location.href = "/login"; }, 3000)
+                    setTimeout(() => { window.location.href = "/"; }, 3000)
                 }).catch(() => {
                     this.error();
                 })

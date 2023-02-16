@@ -61,9 +61,9 @@ function App() {
           <Navbar />
           {/* <UserContext.Provider value={currentuser}> */}
           <Routes>
-            <Route path="/" element={<Home />} />
+            {/* <Route path="/" element={<Home />} /> */}
             <Route path="/category/:id" element={<Category />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/qrscanner" element={<QRScanner />} />
             <Route path={`/${useruid}/edit`} element={<EditPage />} />

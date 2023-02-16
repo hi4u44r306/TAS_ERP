@@ -58,7 +58,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink onClick={() => setIsSidebarOpen(false)} to="/login" className="nav-link">
+                <NavLink onClick={() => setIsSidebarOpen(false)} to="/" className="nav-link">
                   {/* <i className="fa fa-user"></i> */}
                   <div>帳戶</div>
                 </NavLink>

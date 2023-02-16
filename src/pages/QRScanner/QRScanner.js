@@ -60,7 +60,7 @@ const QRScanner = () => {
                         height: 256,
                         width: 256,
                     }}
-                    facingMode="front"
+                    facingmode="front"
                     onError={handleError}
                     onScan={handleScan}
                 />

@@ -71,11 +71,15 @@ class Edit extends React.Component {
             localStorage.setItem('phonenumber', this.state.phonenumber)
             this.success();
             setTimeout(() => {
-                window.location.href = "/login"
+                window.location.href = "/"
             }, 1000);
         }).catch(() => {
             this.error();
         })
+    }
+
+    cancel = () => {
+        window.location.href = "/"
     }
 
     handleChange(e) {
@@ -133,6 +137,11 @@ class Edit extends React.Component {
                         <button className="btn-primary"
                             onClick={this.update}
                             type="submit">更新資料</button>
+                    </div>
+                    <div className='Loginbtn'>
+                        <button className="btn-danger"
+                            onClick={this.cancel}
+                            type="submit">取消</button>
                     </div>
                 </div>
             </div>

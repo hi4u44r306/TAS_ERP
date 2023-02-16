@@ -41,7 +41,7 @@ class Login extends React.Component {
             progress: undefined,
             theme: "light",
         });
-        setTimeout(() => { window.location.href = "/login"; }, 1000)
+        setTimeout(() => { window.location.href = "/"; }, 1000)
     };
 
     error = () => {
