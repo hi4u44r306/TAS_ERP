@@ -46,19 +46,19 @@ const Navbar = () => {
                 ))
               } */}
               <li>
-                <NavLink to="/payrecord" className="nav-link">
+                <NavLink onClick={() => setIsSidebarOpen(false)} to="/payrecord" className="nav-link">
                   {/* <i className="fa fa-user"></i> */}
                   <div>繳費紀錄</div>
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/qrscanner" className="nav-link">
+                <NavLink onClick={() => setIsSidebarOpen(false)} to="/qrscanner" className="nav-link">
                   {/* <i className="fa fa-user"></i> */}
                   <div>QR Code 掃描器</div>
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/login" className="nav-link">
+                <NavLink onClick={() => setIsSidebarOpen(false)} to="/login" className="nav-link">
                   {/* <i className="fa fa-user"></i> */}
                   <div>帳戶</div>
                 </NavLink>
