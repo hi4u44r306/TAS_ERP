@@ -10,7 +10,6 @@ const QRScanner = () => {
     const [paystate, setPaystate] = useState(null);
     const [facing, setFacing] = useState('rear');
 
-
     const handleScan = (data) => {
         if (data) {
             //讀取QR Code 取得用戶ID
@@ -53,14 +52,14 @@ const QRScanner = () => {
             <div className="qr-reader">
                 <h3>會員掃描</h3>
                 <button className='btn-danger' onClick={switchcamera}>Switch Camera</button>
-                {facing}
                 <QrReader
+
                     delay={500}
                     style={{
                         height: 256,
                         width: 256,
                     }}
-                    facingmode="front"
+                    facingmode={"user"}
                     onError={handleError}
                     onScan={handleScan}
                 />
