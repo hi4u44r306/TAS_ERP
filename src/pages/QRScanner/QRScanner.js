@@ -54,8 +54,7 @@ const QRScanner = () => {
                         height: 256,
                         width: 256,
                     }}
-                    // constraints={"user"}
-                    facingmode={"environment"}
+                    constraints={{ facingMode: 'environment' }}
                     onError={handleError}
                     onScan={handleScan}
                 />
