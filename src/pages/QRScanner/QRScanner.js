@@ -59,7 +59,7 @@ const QRScanner = () => {
                         height: 256,
                         width: 256,
                     }}
-                    // constraints={"environment"}
+                    constraints={"environment"}
                     onError={handleError}
                     onScan={handleScan}
                 />
