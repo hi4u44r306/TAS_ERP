@@ -7,8 +7,8 @@ import firebase from '../firebase'
 const QRScanner = () => {
     const [username, setUserName] = useState();
     const [userid, setUserId] = useState();
-    const [paymentrecord, setPaymentrecord] = useState(null);
-    const currentMonth = new Date().toJSON().slice(0, 7);
+    // const [paymentrecord, setPaymentrecord] = useState(null);
+    // const currentMonth = new Date().toJSON().slice(0, 7);
 
 
     const handleScan = (data) => {
