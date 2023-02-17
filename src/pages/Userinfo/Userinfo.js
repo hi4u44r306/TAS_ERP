@@ -12,7 +12,7 @@ const Userinfo = () => {
         e.preventDefault();
         if (window.confirm('確定要登出嗎')) {
             firebase.auth().signOut().then(() => {
-                window.location.reload();
+                window.location.href = '/';
                 localStorage.setItem('currentuser', '')
             }).catch((error) => {
                 console.log(error);
@@ -31,7 +31,7 @@ const Userinfo = () => {
             progress: undefined,
             theme: "light",
         });
-        setTimeout(() => { window.location.href = "/login"; }, 1000)
+        window.location.href = "/";
     };
 
     const error = () => {

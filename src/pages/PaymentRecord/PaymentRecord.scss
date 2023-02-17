@@ -16,6 +16,20 @@
   border-radius: 10px;
 }
 
+.recordcontainer {
+  display: flex;
+  justify-content: center;
+}
+
+.month {
+  color: #005b7f;
+  font-weight: 700;
+}
+
+.spancontainer {
+  align-self: center;
+}
+
 .title {
   width: 40vw;
   padding: 15px;

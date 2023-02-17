@@ -13,6 +13,7 @@ import firebase from './pages/firebase';
 import SearchPage from './pages/SearchPage/SearchPage';
 import EditPage from './pages/EditPage/EditPage';
 import QRScanner from './pages/QRScanner/QRScanner';
+import PaymentRecord from './pages/PaymentRecord/PaymentRecord';
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
       localStorage.setItem('accountcreated', '')
     }
   });
+
   // const user = firebase.auth().currentUser;
   // const currentuser = localStorage.setItem('currentuser', user)
   const useruid = localStorage.getItem('useruid');
@@ -66,6 +68,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/qrscanner" element={<QRScanner />} />
+            <Route path="/payrecord" element={<PaymentRecord />} />
             <Route path={`/${useruid}/edit`} element={<EditPage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="category/search" element={<SearchPage />} />

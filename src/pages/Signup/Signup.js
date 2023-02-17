@@ -59,11 +59,9 @@ class Signup extends React.Component {
             theme: "colored",
         });
     }
-    // this.state.email === null || this.state.email === "" || this.state.email === null || this.state.email === "" || this.state.parentsname === null || this.state.parentsname === "" || this.state.studentname === null || this.state.studentname === "" || this.state.phonenumber === null || this.state.phonenumber === ""
 
     Signup(e) {
         e.preventDefault();
-        const currentMonth = new Date().toJSON().slice(0, 7);
         const currentDate = new Date().toJSON().slice(0, 10);
         if (this.state.email && this.state.password && this.state.parentsname && this.state.studentname && this.state.phonenumber.trim().length !== 0) {
             try {
@@ -79,10 +77,38 @@ class Signup extends React.Component {
                         accountcreated: currentDate,
                     }).then(() => {
                         // 在UserID集合中創建Payrecord子集合
-                        firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + currentMonth).set({
-                            month: currentMonth,
-                            paystate: ""
-                        })
+                        // Get the current month (0-11, where 0 is January and 11 is December)
+                        let currentMonth = new Date().getMonth();
+
+                        // Loop through the next six months (current month + five additional months)
+                        for (let i = 0; i < 12; i++) {
+                            // Calculate the month number and year for this iteration
+                            let monthNumber = (currentMonth + i) % 12;
+                            let year = new Date().getFullYear() + Math.floor((currentMonth + i) / 12);
+
+                            // Create a new Date object with the year and month
+                            let date = new Date(year, monthNumber);
+
+                            // Use the toLocaleString() method to format the date as a string
+                            let monthName = date.toLocaleString('default', { month: 'long' });
+                            let yearNumber = date.getFullYear();
+
+                            // Print the month and year
+                            console.log(yearNumber + ' ' + monthName);
+
+                            const paydate = yearNumber + ' ' + monthName;
+
+                            firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + i).set({
+                                month: paydate,
+                                paystate: ""
+                            }).then(() => {
+                                firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + i).child('detail/').set({
+                                    class: '英文課',
+                                    amount: 2000
+                                })
+                            })
+
+                        }
                     });
                     setTimeout(() => { window.location.href = "/"; }, 3000)
                 }).catch(() => {

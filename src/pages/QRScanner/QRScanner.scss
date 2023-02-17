@@ -1,19 +1,42 @@
 // QRScanner.scss
-.qr-reader {
-  width: 100%;
-  height: 95vh;
+.QRScannerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.QRScanner {
+  height: fit-content;
+  min-width: 50vw;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding: 20px;
+  margin: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
   canvas {
     border: 5px solid #ddd;
   }
 }
-
-.result {
-  // margin-top: 20px;
-  text-align: center;
-  font-size: 18px;
+.qrreadercontainer {
+  display: flex;
+  color: #103755;
+}
+.qrinfocontainer {
+  display: flex;
+  color: #103755;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 20px;
+}
+.qrinfolabel {
+  font-weight: 600;
+  font-size: 17px;
+  width: 150px;
+  vertical-align: middle;
+  display: inline-flex;
+  text-align: left;
+}
+.qrinfospan {
+  width: calc(100% - 100px);
 }

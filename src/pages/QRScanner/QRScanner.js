@@ -44,34 +44,46 @@ const QRScanner = () => {
 
 
     return (
-        <>
-            <div className="qr-reader">
+        <div className='QRScannerContainer'>
+            <div className="QRScanner">
                 <h3>會員掃描</h3>
-                {/* <button className='btn-danger' onClick={switchcamera}>Switch Camera</button> */}
-                <QrReader
-                    delay={1000}
-                    style={{
-                        height: 256,
-                        width: 256,
-                    }}
-                    constraints={{ facingMode: 'environment' }}
-                    onError={handleError}
-                    onScan={handleScan}
-                />
+                <div className='qrreadercontainer'>
+                    <QrReader
+                        delay={1000}
+                        style={{
+                            height: 256,
+                            width: 256,
+                        }}
 
-                <p className="infocontainer">
-                    當月是否繳費:
-                    {
-                        paystate ?
-                            <span className='primary-btn' disabled>已繳費</span>
-                            :
-                            <span className='primary-btn'>去繳費</span>
-                    }
-                </p>
-                <p className="infocontainer">會員編號: {userid || '無資料'}</p>
-                <p className="infocontainer">會員姓名: {username || '無資料'}</p>
+                        onError={handleError}
+                        onScan={handleScan}
+                    />
+                </div>
+                <div className='qrinfocontainer'>
+                    <div className='qrinfolabel'>當月是否繳費 : </div>
+                    <div className='qrinfospan'>
+                        {
+                            paystate ?
+                                <span className='primary-btn' disabled>已繳費</span>
+                                :
+                                <span className='primary-btn'>去繳費</span>
+                        }
+                    </div>
+                </div>
+                <div className='qrinfocontainer'>
+                    <div className='qrinfolabel'>會員編號 : </div>
+                    <div className='qrinfospan'>
+                        {userid || '無資料'}
+                    </div>
+                </div>
+                <div className='qrinfocontainer'>
+                    <div className='qrinfolabel'>會員姓名 : </div>
+                    <div className='qrinfospan'>
+                        {username || '無資料'}
+                    </div>
+                </div>
             </div>
-        </>
+        </div>
     );
 };
 
