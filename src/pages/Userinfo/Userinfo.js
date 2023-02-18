@@ -12,8 +12,8 @@ const Userinfo = () => {
         e.preventDefault();
         if (window.confirm('確定要登出嗎')) {
             firebase.auth().signOut().then(() => {
-                localStorage.setItem('accountcreated', '')
                 window.location.href = '/';
+                localStorage.setItem('accountcreated', '')
             }).catch((error) => {
                 console.log(error);
             });

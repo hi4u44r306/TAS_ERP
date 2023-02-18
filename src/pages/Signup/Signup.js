@@ -93,15 +93,37 @@ class Signup extends React.Component {
 
                             }).then(() => {
                                 firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).child(i).set({
+                                    Detail: [
+                                        {
+                                            classname: '安親班',
+                                            price: 7300
+                                        },
+                                        {
+                                            classname: '英文班',
+                                            price: 2200
+                                        },
+                                        {
+                                            classname: '羊奶',
+                                            price: 700
+                                        }
+                                    ],
                                     month: paydate,
                                     paystate: "",
-                                }).then(() => {
-                                    firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).child(i).child('Detail/').set({
-                                        安親班: '7300',
-                                        英文班: '2000',
-                                        羊奶: '700'
-                                    })
                                 })
+                                // firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).child(i).child('Detail/').set({
+                                //     type1: {
+                                //         classname: '安親班',
+                                //         price: 7300
+                                //     },
+                                //     type2: {
+                                //         classname: '英文班',
+                                //         price: 2200
+                                //     },
+                                //     type3: {
+                                //         classname: '羊奶',
+                                //         price: 700
+                                //     }
+                                // })
                             })
 
                         }

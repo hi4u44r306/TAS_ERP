@@ -44,6 +44,7 @@ function Row(props) {
             <TableRow className='test' sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell align='center'>
                     <IconButton
+                        className='iconbutton'
                         aria-label="expand row"
                         size="large"
                         onClick={() => setOpen(!open)}
@@ -69,33 +70,36 @@ function Row(props) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
-                            <Typography className='detailtitle' variant="h6" gutterBottom component="div">
-                                明細
+                            <Typography className='detailtitle' align='center' variant="h6" gutterBottom component="div">
+                                繳費細項
                             </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell className='detailsecondtitle' align="center">課程類別</TableCell>
+                                        <TableCell className='title' align="center">課程類別</TableCell>
                                         <TableCell
-                                            className='detailsecondtitle' align="center">金額$</TableCell>
+                                            className='title' align="center">金額$</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    <TableRow key={row.Detail.安親班}>
-
-                                        <TableCell className='detailclass' align='center' component="th" scope="row">
-                                            {/* {row.Detail} */}
-                                            要放課程
-                                        </TableCell>
-                                        <TableCell className='detailclass' align="center">{row.Detail.安親班}</TableCell>
+                                    {row.Detail.map((historyRow) => (
+                                        <TableRow key={historyRow.classname}>
+                                            <TableCell className='detailclass' align='center' component="th" scope="row">
+                                                {historyRow.classname}
+                                            </TableCell>
+                                            <TableCell className='detailclass' align='center'>{historyRow.price}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell className='title' align="center">總計 : </TableCell>
+                                        <TableCell
+                                            className='title' align="center"> {
+                                                row.Detail.map(({ price }) => price).reduce((sum, i) => sum + i, 0)
+                                            }</TableCell>
                                     </TableRow>
-                                </TableBody>
-                                <TableBody>
-                                    <Typography className='detailtitle' variant="h6" gutterBottom component="div">
-                                        總計
-                                    </Typography>
-                                    <TableCell className='detailsecondtitle' align="center">等等再加總</TableCell>
-                                </TableBody>
+                                </TableHead>
                             </Table>
                         </Box>
                     </Collapse>
@@ -131,28 +135,30 @@ export default function CollapsibleTable() {
                     console.error(error);
                 });
             } else {
-                window.location.href = "/login"
+                window.location.href = "/"
             }
         });
     }, [])
 
 
     return (
-        <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell />
-                        <TableCell className='title' align="center">月份</TableCell>
-                        <TableCell className='title' align="center">繳費狀態</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {datas.map((row) => (
-                        <Row key={row.Detail.month} row={row} />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Paper sx={{ width: '100%' }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+                <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell className='title' align="center">明細</TableCell>
+                            <TableCell className='title' align="center">月份</TableCell>
+                            <TableCell className='title' align="center">繳費狀態</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {datas.map((row) => (
+                            <Row key={row.Detail.month} row={row} />
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Paper>
     );
 }
