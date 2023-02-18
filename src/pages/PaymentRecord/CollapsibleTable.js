@@ -41,17 +41,17 @@ function Row(props) {
     const [open, setOpen] = React.useState(false);
     return (
         <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableRow className='test' sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell align='center'>
                     <IconButton
                         aria-label="expand row"
-                        size="small"
+                        size="large"
                         onClick={() => setOpen(!open)}
                     >
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row" align="center">
+                <TableCell className='month' component="th" scope="row" align="center">
                     {row.month}
                 </TableCell>
                 <TableCell align="center">
@@ -59,7 +59,7 @@ function Row(props) {
                         row.paystate ?
                             <span
                                 key={row.paystate}
-                                className='text-success fw-7'>{row.paystate}</span>
+                                className='alreadypaybtn' disable>{row.paystate}</span>
                             :
                             <button className='paybtn'>去繳費</button>
                     }
@@ -69,31 +69,32 @@ function Row(props) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
+                            <Typography className='detailtitle' variant="h6" gutterBottom component="div">
                                 明細
                             </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>課程類別</TableCell>
-                                        <TableCell align="center">金額$</TableCell>
+                                        <TableCell className='detailsecondtitle' align="center">課程類別</TableCell>
+                                        <TableCell
+                                            className='detailsecondtitle' align="center">金額$</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {/* {row.map((detailRow) => (
-                                        <TableRow key={detailRow.detail.class}>
-                                            <TableCell component="th" scope="row">
-                                                {detailRow.detail.class}
-                                            </TableCell>
-                                            <TableCell align="center">{detailRow.detail.amount}</TableCell>
-                                        </TableRow>
-                                    ))} */}
-                                    <TableRow key={row.detail.class}>
-                                        <TableCell component="th" scope="row">
-                                            {row.detail.class}
+                                    <TableRow key={row.Detail.安親班}>
+
+                                        <TableCell className='detailclass' align='center' component="th" scope="row">
+                                            {/* {row.Detail} */}
+                                            要放課程
                                         </TableCell>
-                                        <TableCell align="center">{row.detail.amount}</TableCell>
+                                        <TableCell className='detailclass' align="center">{row.Detail.安親班}</TableCell>
                                     </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <Typography className='detailtitle' variant="h6" gutterBottom component="div">
+                                        總計
+                                    </Typography>
+                                    <TableCell className='detailsecondtitle' align="center">等等再加總</TableCell>
                                 </TableBody>
                             </Table>
                         </Box>
@@ -113,12 +114,14 @@ Row.propTypes = {
 
 export default function CollapsibleTable() {
     const [datas, setDatas] = React.useState([]);
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {
+            const currentyear = new Date().getFullYear();
             // const currentMonth = new Date().toJSON().slice(0, 7);
             if (user) {
                 const dbRef = firebase.database().ref();
-                dbRef.child("Users").child(user.uid).child("payrecord").get().then((snapshot) => {
+                dbRef.child("Users").child(user.uid).child("payrecord").child(currentyear).get().then((snapshot) => {
                     if (snapshot.exists()) {
                         setDatas(snapshot.val());
                     } else {
@@ -140,13 +143,13 @@ export default function CollapsibleTable() {
                 <TableHead>
                     <TableRow>
                         <TableCell />
-                        <TableCell align="center">月份</TableCell>
-                        <TableCell align="center">繳費狀態</TableCell>
+                        <TableCell className='title' align="center">月份</TableCell>
+                        <TableCell className='title' align="center">繳費狀態</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {datas.map((row) => (
-                        <Row key={row.month} row={row} />
+                        <Row key={row.Detail.month} row={row} />
                     ))}
                 </TableBody>
             </Table>

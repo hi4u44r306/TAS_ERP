@@ -12,8 +12,8 @@ const Userinfo = () => {
         e.preventDefault();
         if (window.confirm('確定要登出嗎')) {
             firebase.auth().signOut().then(() => {
+                localStorage.setItem('accountcreated', '')
                 window.location.href = '/';
-                localStorage.setItem('currentuser', '')
             }).catch((error) => {
                 console.log(error);
             });
@@ -47,6 +47,21 @@ const Userinfo = () => {
         });
     }
 
+    // const loginagain = () => {
+    //     toast.info('重新登入後再嘗試刪除', {
+    //         position: "top-center",
+    //         autoClose: 1500,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: false,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: "light",
+    //     });
+    //     setTimeout(() => {
+    //         window.location.href = "/"
+    //     }, 1700);
+    // }
     const deleteaccount = () => {
         const user = firebase.auth().currentUser;
         if (window.confirm('確定要刪除帳號 ?')) {
@@ -59,6 +74,7 @@ const Userinfo = () => {
             })
         }
     }
+
 
 
     const edit = () => {

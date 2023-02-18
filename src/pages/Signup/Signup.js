@@ -77,34 +77,30 @@ class Signup extends React.Component {
                         accountcreated: currentDate,
                     }).then(() => {
                         // 在UserID集合中創建Payrecord子集合
-                        // Get the current month (0-11, where 0 is January and 11 is December)
                         let currentMonth = new Date().getMonth();
 
-                        // Loop through the next six months (current month + five additional months)
-                        for (let i = 0; i < 12; i++) {
-                            // Calculate the month number and year for this iteration
+                        for (let i = 1; i <= 10; i++) {
                             let monthNumber = (currentMonth + i) % 12;
                             let year = new Date().getFullYear() + Math.floor((currentMonth + i) / 12);
 
-                            // Create a new Date object with the year and month
                             let date = new Date(year, monthNumber);
 
-                            // Use the toLocaleString() method to format the date as a string
                             let monthName = date.toLocaleString('default', { month: 'long' });
-                            let yearNumber = date.getFullYear();
 
-                            // Print the month and year
-                            console.log(yearNumber + ' ' + monthName);
+                            const paydate = new Date().getFullYear() + '-' + monthName;
 
-                            const paydate = yearNumber + ' ' + monthName;
+                            firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).set({
 
-                            firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + i).set({
-                                month: paydate,
-                                paystate: ""
                             }).then(() => {
-                                firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + i).child('detail/').set({
-                                    class: '英文課',
-                                    amount: 2000
+                                firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).child(i).set({
+                                    month: paydate,
+                                    paystate: "",
+                                }).then(() => {
+                                    firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).child(i).child('Detail/').set({
+                                        安親班: '7300',
+                                        英文班: '2000',
+                                        羊奶: '700'
+                                    })
                                 })
                             })
 

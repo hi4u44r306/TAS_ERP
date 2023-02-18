@@ -40,15 +40,7 @@ class PaymentRecord extends React.Component {
     }
 
     toggle = () => {
-        // const shownstate = this.state.open.slice();
-        // const index = shownstate.indexOf(paystate)
-        // if (index >= 0) {
-        //     shownstate.splice(index, 1)
-        //     this.setState({ open: true });
-        // } else {
-        //     shownstate.push(paystate);
-        //     this.setState({ open: false });
-        // }
+
         this.setState({ open: !this.state.open });
     }
 
