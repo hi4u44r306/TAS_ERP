@@ -96,14 +96,17 @@ class Signup extends React.Component {
                                     Detail: [
                                         {
                                             classname: '安親班',
+                                            amount: 1,
                                             price: 7300
                                         },
                                         {
                                             classname: '英文班',
+                                            amount: 1,
                                             price: 2200
                                         },
                                         {
                                             classname: '羊奶',
+                                            amount: 1,
                                             price: 700
                                         }
                                     ],

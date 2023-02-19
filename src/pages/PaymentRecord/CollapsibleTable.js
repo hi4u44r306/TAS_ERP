@@ -60,7 +60,7 @@ function Row(props) {
                         row.paystate ?
                             <span
                                 key={row.paystate}
-                                className='alreadypaybtn' disable>{row.paystate}</span>
+                                className='alreadypaybtn' disable="true">{row.paystate}</span>
                             :
                             <button className='paybtn'>去繳費</button>
                     }
@@ -78,6 +78,8 @@ function Row(props) {
                                     <TableRow>
                                         <TableCell className='title' align="center">課程類別</TableCell>
                                         <TableCell
+                                            className='title' align="center">課程數量</TableCell>
+                                        <TableCell
                                             className='title' align="center">金額$</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -87,6 +89,7 @@ function Row(props) {
                                             <TableCell className='detailclass' align='center' component="th" scope="row">
                                                 {historyRow.classname}
                                             </TableCell>
+                                            <TableCell className='detailclass' align='center'>{historyRow.amount}</TableCell>
                                             <TableCell className='detailclass' align='center'>{historyRow.price}</TableCell>
                                         </TableRow>
                                     ))}
@@ -94,10 +97,12 @@ function Row(props) {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell className='title' align="center">總計 : </TableCell>
-                                        <TableCell
-                                            className='title' align="center"> {
-                                                row.Detail.map(({ price }) => price).reduce((sum, i) => sum + i, 0)
-                                            }</TableCell>
+                                        <TableCell className='title' align="center">  </TableCell>
+                                        <TableCell className='title' align="center">
+                                            {
+                                                row.Detail.map(({ price, amount }) => price * amount).reduce((sum, i) => sum + i, 0)
+                                            }
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
                             </Table>
