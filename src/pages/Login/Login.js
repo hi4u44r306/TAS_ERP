@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './Login.scss'
-import firebase from "../firebase";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Userinfo from '../Userinfo/Userinfo';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 
 class Login extends React.Component {
 
@@ -20,7 +20,8 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        firebase.auth().onAuthStateChanged((user) => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.currentuser = user.email;
             } else {
@@ -59,7 +60,7 @@ class Login extends React.Component {
 
     login(e) {
         e.preventDefault();
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+        signInWithEmailAndPassword(this.state.email, this.state.password)
             .then(() => {
                 this.success();
             }).catch(() => {

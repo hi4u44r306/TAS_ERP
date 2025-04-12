@@ -14,8 +14,10 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './PaymentRecord.scss'
-import firebase from "../firebase";
+import { rtdb } from "../firebase";
 import { useEffect } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { get, ref } from 'firebase/database';
 
 // function createData(month, paystate) {
 //     return {
@@ -124,26 +126,30 @@ Row.propTypes = {
 export default function CollapsibleTable() {
     const [datas, setDatas] = React.useState([]);
 
+    const auth = getAuth();
+
     useEffect(() => {
-        firebase.auth().onAuthStateChanged((user) => {
-            const currentyear = new Date().getFullYear();
+        onAuthStateChanged(auth, (user) => {
             // const currentMonth = new Date().toJSON().slice(0, 7);
             if (user) {
-                const dbRef = firebase.database().ref();
-                dbRef.child("Users").child(user.uid).child("payrecord").child(currentyear).get().then((snapshot) => {
+                const currentYear = new Date().getFullYear();
+                const payRecordRef = ref(rtdb, `Users/${user.uid}/payrecord/${currentYear}`);
+
+                get(payRecordRef).then((snapshot) => {
                     if (snapshot.exists()) {
-                        setDatas(snapshot.val());
+                        const data = Object.values(snapshot.val());
+                        setDatas(data);
                     } else {
-                        setDatas()
+                        setDatas([]);
                     }
                 }).catch((error) => {
                     console.error(error);
                 });
             } else {
-                window.location.href = "/"
+                window.location.href = "/";
             }
         });
-    }, [])
+    }, [auth])
 
 
     return (

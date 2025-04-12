@@ -1,17 +1,21 @@
 import React from 'react'
 import './Userinfo.scss'
-import firebase from '../firebase'
+import { rtdb } from '../firebase'
 import { toast } from 'react-toastify';
 import QRCode from "react-qr-code";
+import { getAuth, signOut } from 'firebase/auth';
+import { ref, remove } from 'firebase/database'; // 🔄 新增這一行
+
 
 const Userinfo = () => {
     const useruid = localStorage.getItem('useruid');
-    const dbRef = firebase.database().ref();
+    const dbRef = ref(rtdb); // ✅ 正確取得資料庫參考
+
 
     const logout = (e) => {
         e.preventDefault();
         if (window.confirm('確定要登出嗎')) {
-            firebase.auth().signOut().then(() => {
+            signOut.then(() => {
                 window.location.href = '/';
                 localStorage.setItem('accountcreated', '')
             }).catch((error) => {
@@ -62,15 +66,18 @@ const Userinfo = () => {
     //         window.location.href = "/"
     //     }, 1700);
     // }
+    const auth = getAuth();
     const deleteaccount = () => {
-        const user = firebase.auth().currentUser;
+        const user = auth.currentUser;
         if (window.confirm('確定要刪除帳號 ?')) {
             user.delete().then(() => {
-                dbRef.child(`Users/${useruid}`).remove(() => {
-                    success();
-                }).catch(() => {
-                    error();
-                })
+                remove(ref(rtdb, `Users/${useruid}`))
+                    .then(() => {
+                        success();
+                    })
+                    .catch(() => {
+                        error();
+                    });
             })
         }
     }

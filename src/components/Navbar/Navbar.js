@@ -63,6 +63,12 @@ const Navbar = () => {
                   <div>帳戶</div>
                 </NavLink>
               </li>
+              <li>
+                <NavLink onClick={() => setIsSidebarOpen(false)} to="/qrcodegenerator" className="nav-link">
+                  {/* <i className="fa fa-user"></i> */}
+                  <div>QR code 生成器</div>
+                </NavLink>
+              </li>
             </ul>
 
             <button type="button" className='navbar-show-btn text-gold' onClick={() => setIsSidebarOpen(true)}>

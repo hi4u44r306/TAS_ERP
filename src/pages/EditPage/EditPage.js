@@ -1,10 +1,11 @@
 import React from 'react'
 // import { Link } from 'react-router-dom'
 import './Edit.scss'
-import firebase from "../firebase";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { rtdb } from "../firebase";
+import { ref, get, update } from "firebase/database"; // Modular 函式
 
 
 class Edit extends React.Component {
@@ -20,10 +21,10 @@ class Edit extends React.Component {
         }
     }
     useruid = localStorage.getItem('useruid');
-    dbRef = firebase.database().ref();
+    userRef = ref(rtdb, `Users/${this.useruid}`);
 
     componentDidMount() {
-        this.dbRef.child("Users").child(this.useruid).get().then((snapshot) => {
+        get(this.userRef).then((snapshot) => {
             this.setState({ ...snapshot.val() })
         }).catch(() => {
             this.setState({})
@@ -61,21 +62,24 @@ class Edit extends React.Component {
     }
 
     update = () => {
-        this.dbRef.child("Users").child(this.useruid).update({
+        update(this.userRef, {
             studentname: this.state.studentname,
             parentsname: this.state.parentsname,
             phonenumber: this.state.phonenumber,
-        }).then(() => {
-            localStorage.setItem("studentname", this.state.studentname);
-            localStorage.setItem("parentsname", this.state.parentsname);
-            localStorage.setItem('phonenumber', this.state.phonenumber)
-            this.success();
-            setTimeout(() => {
-                window.location.href = "/"
-            }, 1000);
-        }).catch(() => {
-            this.error();
         })
+            .then(() => {
+                localStorage.setItem("studentname", this.state.studentname);
+                localStorage.setItem("parentsname", this.state.parentsname);
+                localStorage.setItem('phonenumber', this.state.phonenumber);
+                this.success();
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1000);
+            })
+            .catch(() => {
+                this.error();
+            });
+
     }
 
     cancel = () => {

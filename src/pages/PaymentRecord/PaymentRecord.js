@@ -1,7 +1,10 @@
 import React from 'react'
 import './PaymentRecord.scss'
-import firebase from "../firebase";
+import { rtdb } from "../firebase";
 import CollapsibleTable from './CollapsibleTable';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { ref, get, child } from 'firebase/database';
+
 
 class PaymentRecord extends React.Component {
     constructor() {
@@ -16,26 +19,23 @@ class PaymentRecord extends React.Component {
     }
 
     componentDidMount() {
-        firebase.auth().onAuthStateChanged((user) => {
-            // const currentMonth = new Date().toJSON().slice(0, 7);
-            if (user) {
-                const dbRef = firebase.database().ref();
-                dbRef.child("Users").child(user.uid).child("payrecord").get().then((snapshot) => {
-                    if (snapshot.exists()) {
-                        const data = [];
-                        snapshot.forEach((doc) => {
-                            data.push(doc.val())
-                        })
-                        this.setState({ paymentrecord: data });
-                    } else {
-                        console.log('no data')
-                    }
-                }).catch((error) => {
-                    console.error(error);
-                });
-            } else {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            const dbRef = ref(rtdb); // 指向整個 DB
+            get(child(dbRef, `Users/${user.uid}/payrecord`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = [];
+                    snapshot.forEach((doc) => {
+                        data.push(doc.val());
+                    });
+                    this.setState({ paymentrecord: data });
+                } else {
+                    console.log('no data');
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
 
-            }
         });
     }
 

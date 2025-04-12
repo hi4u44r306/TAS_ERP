@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './Signup.scss'
-import firebase from '../firebase'
+import { rtdb } from '../firebase'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Form } from 'react-bootstrap';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 class Signup extends React.Component {
 
@@ -65,10 +66,10 @@ class Signup extends React.Component {
         const currentDate = new Date().toJSON().slice(0, 10);
         if (this.state.email && this.state.password && this.state.parentsname && this.state.studentname && this.state.phonenumber.trim().length !== 0) {
             try {
-                firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
+                createUserWithEmailAndPassword(this.state.email, this.state.password).then((user) => {
                     this.success();
                     // 在User中用UserID建立集合
-                    firebase.database().ref('Users/' + user.user.uid).set({
+                    rtdb.ref('Users/' + user.user.uid).set({
                         parentsname: this.state.parentsname,
                         studentname: this.state.studentname,
                         email: this.state.email,
@@ -89,10 +90,10 @@ class Signup extends React.Component {
 
                             const paydate = new Date().getFullYear() + '-' + monthName;
 
-                            firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).set({
+                            rtdb.ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).set({
 
                             }).then(() => {
-                                firebase.database().ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).child(i).set({
+                                rtdb.ref('Users/' + user.user.uid).child('payrecord/' + new Date().getFullYear()).child(i).set({
                                     Detail: [
                                         {
                                             classname: '安親班',
