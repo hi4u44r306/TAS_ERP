@@ -9,7 +9,6 @@ import { ref, remove } from 'firebase/database'; // 🔄 新增這一行
 
 const Userinfo = () => {
     const useruid = localStorage.getItem('useruid');
-    const dbRef = ref(rtdb); // ✅ 正確取得資料庫參考
 
 
     const logout = (e) => {
