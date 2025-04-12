@@ -57,6 +57,10 @@ const QRScanner = () => {
 
                         onError={handleError}
                         onScan={handleScan}
+
+                        constraints={{
+                            video: { facingMode: 'environment' } // ✅ 使用後鏡頭
+                        }}
                     />
                 </div>
                 <div className='qrinfocontainer'>
