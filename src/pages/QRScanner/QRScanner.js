@@ -6,26 +6,16 @@ import { rtdb } from '../firebase';
 import { get, ref } from 'firebase/database';
 
 const QRScanner = () => {
-    const [username, setUserName] = useState();
-    const [userid, setUserId] = useState();
+    const [userdata, setUserData] = useState({});
     const [paystate, setPaystate] = useState(null);
 
     const handleScan = (data) => {
-        if (data && data.text !== userid) {
-            const scannedId = data.text;
-            setUserId(scannedId);
-
-            // 讀取用戶基本資料
-            const userRef = ref(rtdb, 'Users/' + scannedId);
-            get(userRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    setUserName(snapshot.val().studentname);
-                } else {
-                    setUserName('找不到會員');
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
+        if (data) {
+            const parsed = JSON.parse(data.text); // 將掃描到的內容轉成物件
+            const scannedId = parsed.id;
+            // const scannedId = data.text;
+            console.log(parsed)
+            setUserData(parsed);
 
             // 檢查當月繳費記錄
             const currentMonth = new Date().toJSON().slice(0, 7);
@@ -49,10 +39,10 @@ const QRScanner = () => {
     return (
         <div className='QRScannerContainer'>
             <div className="QRScanner">
-                <h3>會員掃描</h3>
+                <h3>簽到簽退系統</h3>
                 <div className='qrreadercontainer'>
                     <QrReader
-                        delay={1000}
+                        delay={500}
                         style={{
                             height: 256,
                             width: 256,
@@ -75,17 +65,18 @@ const QRScanner = () => {
                     </div>
                 </div>
                 <div className='qrinfocontainer'>
-                    <div className='qrinfolabel'>會員編號 : </div>
+                    <div className='qrinfolabel'>會員姓名 : </div>
                     <div className='qrinfospan'>
-                        {userid || '無資料'}
+                        {userdata.name || '無資料'}
                     </div>
                 </div>
                 <div className='qrinfocontainer'>
-                    <div className='qrinfolabel'>會員姓名 : </div>
+                    <div className='qrinfolabel'>家長電話 : </div>
                     <div className='qrinfospan'>
-                        {username || '無資料'}
+                        {"0" + userdata.parentPhone || '無資料'}
                     </div>
                 </div>
+
             </div>
         </div>
     );
